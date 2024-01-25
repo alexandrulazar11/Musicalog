@@ -30,7 +30,8 @@ public class AlbumService {
     }
 
     public Mono<Album> findById(String id) {
-        return repository.findById(id);
+        return repository.findById(id)
+                .switchIfEmpty(Mono.error(new NotFoundException("Album not found with id: %s when updating".formatted(id))));
     }
 
     public Mono<Album> save(Album album) {
