@@ -100,6 +100,7 @@ Deleting an Album from the catalogue: \
 - Oauth with roles and permissions for users
 - Can have an API Gateway between UI and this service to do the authorization and authentication between the UI and this API
 - Album, MediaType and other new domains should be present in a client repository to facilitate type matching between the UI and this API
-- End to End testing / Automated tests -> can be done in a different application for tests so it doesn't affect performance and scalability
+- End-to-End testing / Automated tests -> can be done in a different application for tests so it doesn't affect performance and scalability
 - Deploying it to K8s will ensure scalability by being more flexible and generating new pods with demand
 - MongoDB is a good choice since there is no need for relational implementations or SQL based querying. However, if the application will scale to a very high level, it might need not be the best choice.
+- For the initial set-up and configuration, it was safe working on the main branch. However, as it grows and becomes active in production, this should not happen
