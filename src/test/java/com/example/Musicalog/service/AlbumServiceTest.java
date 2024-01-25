@@ -156,8 +156,8 @@ public class AlbumServiceTest {
 
         //then
         StepVerifier.create(result)
-                .expectNextCount(0)
-                .verifyComplete();
+                .expectError(NotFoundException.class)
+                .verify();
     }
 
     @Test

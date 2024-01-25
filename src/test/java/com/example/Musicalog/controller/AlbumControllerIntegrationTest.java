@@ -3,12 +3,17 @@ package com.example.Musicalog.controller;
 import com.example.Musicalog.domain.Album;
 import com.example.Musicalog.domain.MediaType;
 import com.example.Musicalog.repository.AlbumRepository;
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.reactive.AutoConfigureWebTestClient;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.test.web.reactive.server.WebTestClient;
+import org.testcontainers.containers.MongoDBContainer;
+import org.testcontainers.utility.DockerImageName;
 import reactor.test.StepVerifier;
 
 import java.util.List;
@@ -17,6 +22,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 @SpringBootTest
 @AutoConfigureWebTestClient
+@PropertySource("classpath:application-test.properties")
 public class AlbumControllerIntegrationTest {
 
     private static final String  ID1     = "AlbumId";
@@ -28,12 +34,28 @@ public class AlbumControllerIntegrationTest {
     private static final String  ARTIST2 = "Album Artist Pop";
     private static final String  ARTIST3 = "Album Artist Folk";
     private static final Integer STOCK   = 111;
+    private static MongoDBContainer mongoDBContainer;
+
 
     @Autowired
     private WebTestClient webTestClient;
 
     @Autowired
     private AlbumRepository albumRepository;
+
+    @BeforeAll
+    public static void setUpMongoDBContainer() {
+        mongoDBContainer = new MongoDBContainer(DockerImageName.parse("mongo:latest"));
+        mongoDBContainer.start();
+        System.setProperty("spring.data.mongodb.uri", mongoDBContainer.getReplicaSetUrl());
+    }
+
+    @AfterAll
+    public static void stopMongoDBContainer() {
+        if (mongoDBContainer != null) {
+            mongoDBContainer.stop();
+        }
+    }
 
     @BeforeEach
     public void setUp() {

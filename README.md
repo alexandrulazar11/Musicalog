@@ -14,17 +14,21 @@ what will each endpoint return
 add swagger \
 controller returns Flux or Mono as a Reactive value to maintain the non-blocking nature of the application. However, it can be changed to return the actual values if it needs to.
 
-### Running MongoDB in a Docker Container:
+### Running Musicalog:
+
+Make sure to build the application beforehand:
+
+./gradlew clean build 
 
 Within the root folder of this application, run this:
 
 docker-compose up -d 
 
-This will start the docker container locally with the MongoDB application. You can check by running:
+This will start 2 docker containers locally with both the MongoDB and the application. You can check by running:
 
 docker ps
 
-To stop it, you can run this:
+To stop them, you can run this:
 
 docker-compose down
 
@@ -37,10 +41,10 @@ Fetching all albums from the catalogue: \
 curl http://localhost:8080/api/album/all
 
 Fetching all albums from the catalogue by title: \
-curl -X GET "http://localhost:8080/api/album/by-title?title=YourTitleHere"
+curl -X GET "http://localhost:8080/api/album/title?title=YourTitleHere"
 
 Fetching all albums from the catalogur by Artist name: \
-curl -X GET "http://localhost:8080/api/album/by-artist?artistName=YourArtistNameHere"
+curl -X GET "http://localhost:8080/api/album/artist?artistName=YourArtistNameHere"
 
 Fetching album from catalogue by Id: \
 curl -X GET "http://localhost:8080/api/album/YourAlbumIdHere"
