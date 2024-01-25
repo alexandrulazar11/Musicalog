@@ -2,6 +2,8 @@ package com.example.Musicalog.controller;
 
 import com.example.Musicalog.domain.Album;
 import com.example.Musicalog.service.AlbumService;
+import com.example.Musicalog.service.exception.NotFoundException;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
@@ -42,8 +44,11 @@ public class AlbumController {
     }
 
     @PutMapping("/update")
-    public Mono<Album> updateAlbum(@RequestBody Album album) {
-        return service.update(album);
+    public Mono<ResponseEntity<Album>> updateAlbum(@RequestBody Album album) {
+        return service.update(album)
+                .map(ResponseEntity::ok)
+                .onErrorResume(NotFoundException.class, e ->
+                        Mono.just(ResponseEntity.notFound().build()));
     }
 
     @DeleteMapping("/{id}")
