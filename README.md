@@ -96,7 +96,7 @@ Deleting an Album from the catalogue: \
 
 ## Future Work
 
-- security 
+- security implementation with Keycloak
 - Oauth with roles and permissions for users
 - Can have an API Gateway between UI and this service to do the authorization and authentication between the UI and this API
 - Album, MediaType and other new domains should be present in a client repository to facilitate type matching between the UI and this API

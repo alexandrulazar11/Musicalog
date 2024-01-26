@@ -9,7 +9,6 @@ services:
       - "27017:27017"
 
   musicalog:
-#    image: musicalog
     build:
       context: .
     ports:
